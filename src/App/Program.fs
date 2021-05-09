@@ -9,5 +9,5 @@ let main argv =
         searchUrl term
         |> parseReposWithTerm
         |> List.map openIssueUrl
-        |> printfn "%A\n"
+        |> List.iter (fun url -> url |> printfn "%A")
         0
