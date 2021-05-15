@@ -10,16 +10,15 @@ let parseFilePath args =
 /// Return (<username>, <reponame>)
 let nameAndRepo (url: string) = 
     let e = lazy failwith "Invalid GitHub URL provided: {url}"
-    in 
-        let separateNameRepo (x: string) =
-            match x.Trim('/').Split("/") |> Array.toList with
-            | [] ->  e.Force()
-            | username :: repo :: _ -> (username, repo)
-            | _ -> e.Force()
-        match url.Split(".com/") |> Array.toList with
-        | [] -> e.Force()
-        | _ :: x :: _ -> separateNameRepo x
+    let separateNameRepo (x: string) =
+        match x.Trim('/').Split("/") |> Array.toList with
+        | [] ->  e.Force()
+        | username :: repo :: _ -> (username, repo)
         | _ -> e.Force()
+    match url.Split(".com/") |> Array.toList with
+    | [] -> e.Force()
+    | _ :: x :: _ -> separateNameRepo x
+    | _ -> e.Force()
 
 let archiveUrl (userName, repoName): string =
     $"https://api.github.com/repos/{userName}/{repoName}/tarball"

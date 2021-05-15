@@ -16,7 +16,7 @@ module ParserUtil =
 
     let parseReposWithTerm (url: string) =
         let response = GitHub.Load(url)
-        in response.Items
+        response.Items
         |> Seq.map (fun repo -> (repo.FullName, repo.HtmlUrl))
         |> Seq.map toRepoResult
         |> Seq.toList
